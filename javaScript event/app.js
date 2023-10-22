@@ -1,0 +1,29 @@
+const title = document.querySelector("#inputTitle");
+const text = document.querySelector("#inputText");
+const formData = {};
+for (let input of [title, text]) {
+  input.addEventListener("input", function ({ target }) {
+    const { name, value } = target;
+    formData[name] = value;
+  });
+}
+const ul = document.querySelector(".task");
+const button = document.querySelector(".submit");
+button.addEventListener("click", function (event) {
+  const element = document.createElement("div");
+  element.classList.add("todo");
+  ul.prepend(element);
+  const divtodo = document.querySelector(".todo");
+  divtodo.innerHTML = `<h2>${formData.title}</h2><p>${formData.text}</p>`;
+  this.value = "";
+  const deleted = document.createElement("button");
+  deleted.classList.add("delete");
+  deleted.innerText = "Delete";
+  divtodo.append(deleted);
+  event.preventDefault();
+  const del = document.querySelector(".delete");
+  del.addEventListener("click", (event) => {
+    const block = event.target.closest(".todo");
+    block.remove();
+  });
+});
